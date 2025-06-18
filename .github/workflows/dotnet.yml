@@ -1,0 +1,72 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-currency-service:
+    name: Build CurrencyService
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./CurrencyService
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore CurrencyService.sln
+
+      - name: Build
+        run: dotnet build CurrencyService.sln --no-restore --configuration Release
+
+  build-user-service:
+    name: Build UserService
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./UserService
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore UserService.sln
+
+      - name: Build
+        run: dotnet build UserService.sln --no-restore --configuration Release
+
+  build-finance-service:
+    name: Build FinanceService
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./FinanceService
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore FinanceService.sln
+
+      - name: Build
+        run: dotnet build FinanceService.sln --no-restore --configuration Release
