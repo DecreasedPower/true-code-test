@@ -1,0 +1,82 @@
+services:
+  currency-service:
+    build:
+      context: ./CurrencyService
+      dockerfile: Dockerfile
+    container_name: currency-service
+    ports:
+      - "5001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=appdb;Username=appuser;Password=apppass
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  user-service:
+    build:
+      context: ./UserService
+      dockerfile: Dockerfile
+    container_name: user-service
+    ports:
+      - "5002:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=appdb;Username=appuser;Password=apppass
+    depends_on:
+      - postgres
+    networks:
+      - backend
+  finance-service:
+    build:
+      context: ./FinanceService
+      dockerfile: Dockerfile
+    container_name: finance-service
+    ports:
+      - "5003:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=appdb;Username=appuser;Password=apppass
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+#  api-gateway:
+#    build:
+#      context: ./Gateway
+#      dockerfile: Dockerfile
+#    container_name: api-gateway
+#    ports:
+#      - "5000:80"
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Production
+#    depends_on:
+#      - currency-service
+#      - user-service
+#      - finance-service
+#    networks:
+#      - backend
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+      POSTGRES_DB: appdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+volumes:
+  pgdata:
+
+networks:
+  backend:
+    driver: bridge
