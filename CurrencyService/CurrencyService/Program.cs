@@ -1,3 +1,7 @@
+using CurrencyService.Business.BackgroundServices;
+using CurrencyService.Db;
+using Microsoft.EntityFrameworkCore;
+
 namespace CurrencyService;
 
 public class Program
@@ -6,19 +10,13 @@ public class Program
   {
     var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
+    builder.Services.AddDbContext<CurrencyServiceDbContext>(options =>
+      options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString")));
 
-    builder.Services.AddControllers();
+    // Add services to the container.
+    builder.Services.AddHostedService<CurrencyRateUpdateService>();
 
     var app = builder.Build();
-
-    // Configure the HTTP request pipeline.
-
-    app.UseHttpsRedirection();
-
-    app.UseAuthorization();
-
-    app.MapControllers();
 
     app.Run();
   }

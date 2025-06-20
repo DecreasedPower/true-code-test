@@ -2,6 +2,18 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService", "CurrencyService\CurrencyService.csproj", "{A95B6418-2D3F-4E13-9829-48F29D0D2677}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{F8696A31-72A6-408A-9B60-177570562C7E}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+		.dockerignore = .dockerignore
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Db", "CurrencyService.Db\CurrencyService.Db.csproj", "{BBD59878-90A4-4916-AAF2-BFF04DFD2F91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Business", "CurrencyService.Business\CurrencyService.Business.csproj", "{8D27EDB1-2F86-4930-9E0B-E8FBD52B1C4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Data", "CurrencyService.Data\CurrencyService.Data.csproj", "{1CDE1FFA-4D45-4BAF-A9F4-1FE6475E25FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +24,17 @@ Global
 		{A95B6418-2D3F-4E13-9829-48F29D0D2677}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A95B6418-2D3F-4E13-9829-48F29D0D2677}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A95B6418-2D3F-4E13-9829-48F29D0D2677}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD59878-90A4-4916-AAF2-BFF04DFD2F91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD59878-90A4-4916-AAF2-BFF04DFD2F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD59878-90A4-4916-AAF2-BFF04DFD2F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD59878-90A4-4916-AAF2-BFF04DFD2F91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D27EDB1-2F86-4930-9E0B-E8FBD52B1C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D27EDB1-2F86-4930-9E0B-E8FBD52B1C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D27EDB1-2F86-4930-9E0B-E8FBD52B1C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D27EDB1-2F86-4930-9E0B-E8FBD52B1C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CDE1FFA-4D45-4BAF-A9F4-1FE6475E25FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CDE1FFA-4D45-4BAF-A9F4-1FE6475E25FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CDE1FFA-4D45-4BAF-A9F4-1FE6475E25FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CDE1FFA-4D45-4BAF-A9F4-1FE6475E25FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
