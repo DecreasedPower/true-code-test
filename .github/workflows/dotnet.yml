@@ -8,6 +8,27 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-gateway-service:
+    name: Build Gateway
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Gateway
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore Gateway.sln
+
+      - name: Build
+        run: dotnet build Gateway.sln --no-restore --configuration Release
+
   build-currency-service:
     name: Build CurrencyService
     runs-on: ubuntu-latest
