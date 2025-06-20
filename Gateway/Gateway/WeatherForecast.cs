@@ -1,4 +1,4 @@
-namespace CurrencyService;
+namespace Gateway;
 
 public class WeatherForecast
 {
