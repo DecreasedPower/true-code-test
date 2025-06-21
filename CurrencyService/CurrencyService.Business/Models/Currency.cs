@@ -1,8 +1,9 @@
 using System.Xml.Serialization;
+using CurrencyService.Db.Models;
 
 namespace CurrencyService.Business.Models;
 
-public class Valute
+public class Currency
 {
   [XmlAttribute("ID")]
   public string Id { get; set; }
@@ -12,4 +13,14 @@ public class Valute
 
   [XmlElement("VunitRate")]
   public string Rate { get; set; }
+
+  public DbCurrency Map()
+  {
+    return new DbCurrency
+    {
+      Id = Id,
+      Name = Name,
+      Rate = decimal.TryParse(Rate, out decimal result) ? result : 0
+    };
+  }
 }

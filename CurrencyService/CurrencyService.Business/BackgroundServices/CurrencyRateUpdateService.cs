@@ -1,3 +1,4 @@
+using System.Text;
 using System.Xml.Serialization;
 using CurrencyService.Business.Models;
 using CurrencyService.Business.Services.Interfaces;
@@ -22,31 +23,34 @@ public class CurrencyRateUpdateService(
 
   public Task StopAsync(CancellationToken ct)
   {
-    _timer?.Change(Timeout.Infinite, 0);
+    _timer.Change(Timeout.Infinite, 0);
     return Task.CompletedTask;
   }
 
   public void Dispose()
   {
-    _timer?.Dispose();
+    _timer.Dispose();
   }
 
   private async Task Run(CancellationToken ct)
   {
+    logger.LogInformation("Getting currency rates.");
+
     Stream xml;
     using (var httpClient = new HttpClient())
     {
       xml = await httpClient.GetStreamAsync("http://www.cbr.ru/scripts/XML_daily.asp", ct);
     }
 
-    var serializer = new XmlSerializer(typeof(ValuteCurrency));
-    List<Valute> valutes;
+    var serializer = new XmlSerializer(typeof(CurrencyRates));
+    List<Currency> currencies;
 
-    using (TextReader reader = new StreamReader(xml))
+    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+    using (TextReader reader = new StreamReader(xml, Encoding.GetEncoding("windows-1251")))
     {
-      var Currencies = (ValuteCurrency)serializer.Deserialize(reader);
+      var currencyRates = (CurrencyRates)serializer.Deserialize(reader);
 
-      valutes = Currencies.Valutes;
+      currencies = currencyRates?.Currencies;
     }
 
     IServiceScope scope = null;
@@ -56,7 +60,7 @@ public class CurrencyRateUpdateService(
 
       var service = scope.ServiceProvider.GetRequiredService<ICurrencyService>();
 
-      await service.UpdateCurrencyRate(valutes, ct);
+      await service.UpdateCurrencyRate(currencies, ct);
     }
     catch (Exception e)
     {

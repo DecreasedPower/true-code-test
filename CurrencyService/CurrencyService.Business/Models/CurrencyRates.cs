@@ -3,8 +3,8 @@ using System.Xml.Serialization;
 namespace CurrencyService.Business.Models;
 
 [XmlRoot("ValCurs")]
-public class ValuteCurrency
+public class CurrencyRates
 {
   [XmlElement("Valute")]
-  public List<Valute> Valutes { get; set; }
+  public List<Currency> Currencies { get; set; }
 }

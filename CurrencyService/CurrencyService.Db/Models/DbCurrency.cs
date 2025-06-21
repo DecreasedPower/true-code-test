@@ -1,15 +1,20 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace CurrencyService.Db.Models;
 
+[Table("Currencies")]
 [PrimaryKey(nameof(Id))]
-public class Currency
+public class DbCurrency
 {
-  public int Id { get; set; }
+  [Key]
+  public string Id { get; set; }
 
   [MaxLength(100)]
   public string Name { get; set; }
 
   public decimal Rate { get; set; }
+
+  public ICollection<DbUser> Users { get; set; } = new List<DbUser>();
 }

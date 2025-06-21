@@ -1,13 +1,20 @@
-using System.Xml.Serialization;
 using CurrencyService.Business.Models;
 using CurrencyService.Business.Services.Interfaces;
+using CurrencyService.Data.Interfaces;
 
 namespace CurrencyService.Business.Services;
 
-public class CurrencyService : ICurrencyService
+public class CurrencyService(
+  ICurrencyRepository repository)
+  : ICurrencyService
 {
-  public Task UpdateCurrencyRate(List<Valute> valutes, CancellationToken ct)
+  public Task UpdateCurrencyRate(List<Currency> currencies, CancellationToken ct)
   {
-    throw new NotImplementedException();
+    if (currencies is null || currencies.Count == 0)
+    {
+      return Task.CompletedTask;
+    }
+
+    return repository.UpdateCurrencies(currencies.ConvertAll(v => v.Map()));
   }
 }

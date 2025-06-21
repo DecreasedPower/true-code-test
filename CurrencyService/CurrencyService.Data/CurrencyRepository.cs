@@ -9,12 +9,10 @@ public class CurrencyRepository(
   CurrencyServiceDbContext dbContext)
   : ICurrencyRepository
 {
-  public async Task<bool> UpdateCurrencies(List<Currency> currencies)
+  public async Task UpdateCurrencies(List<DbCurrency> currencies)
   {
-    await dbContext.Currencies.ExecuteDeleteAsync();
-    dbContext.Currencies.AddRange(currencies);
+    await dbContext.Currency.ExecuteDeleteAsync();
+    dbContext.Currency.AddRange(currencies);
     await dbContext.SaveChangesAsync();
-
-    return true;
   }
 }
