@@ -17,7 +17,7 @@ namespace CurrencyService.Db.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Rate = table.Column<decimal>(type: "numeric", nullable: false)
+                    Rate = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {

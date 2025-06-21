@@ -5,7 +5,7 @@ namespace CurrencyService.Db;
 
 public class CurrencyServiceDbContext(DbContextOptions<CurrencyServiceDbContext> options) : DbContext(options)
 {
-  public DbSet<DbCurrency> Currency { get; set; }
+  public DbSet<DbCurrency> Currencies { get; set; }
   public DbSet<DbUser> Users { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)

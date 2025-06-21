@@ -31,8 +31,10 @@ namespace CurrencyService.Db.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("numeric");
+                    b.Property<string>("Rate")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 

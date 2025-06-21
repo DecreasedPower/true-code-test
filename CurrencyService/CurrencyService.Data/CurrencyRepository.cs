@@ -1,3 +1,4 @@
+using System.Text;
 using CurrencyService.Data.Interfaces;
 using CurrencyService.Db;
 using CurrencyService.Db.Models;
@@ -11,8 +12,24 @@ public class CurrencyRepository(
 {
   public async Task UpdateCurrencies(List<DbCurrency> currencies)
   {
-    await dbContext.Currency.ExecuteDeleteAsync();
-    dbContext.Currency.AddRange(currencies);
-    await dbContext.SaveChangesAsync();
+    var sqlSb = new StringBuilder(@"
+      BEGIN;
+        DELETE FROM ""Currencies"" WHERE 1 = 1;
+        INSERT INTO ""Currencies"" (""Id"", ""Name"", ""Rate"")
+        VALUES ");
+
+    for (int i = 0; i < currencies.Count; i++)
+    {
+      if (i == currencies.Count - 1)
+      {
+        sqlSb.Append($"('{currencies[i].Id}', '{currencies[i].Name}', '{currencies[i].Rate}'); COMMIT;");
+      }
+      else
+      {
+        sqlSb.Append($"('{currencies[i].Id}', '{currencies[i].Name}', '{currencies[i].Rate}'),");
+      }
+    }
+
+    await dbContext.Database.ExecuteSqlRawAsync(sqlSb.ToString());
   }
 }

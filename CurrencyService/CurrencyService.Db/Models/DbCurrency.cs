@@ -14,7 +14,8 @@ public class DbCurrency
   [MaxLength(100)]
   public string Name { get; set; }
 
-  public decimal Rate { get; set; }
+  [MaxLength(100)]
+  public string Rate { get; set; }
 
   public ICollection<DbUser> Users { get; set; } = new List<DbUser>();
 }

@@ -20,7 +20,7 @@ public class Currency
     {
       Id = Id,
       Name = Name,
-      Rate = decimal.TryParse(Rate, out decimal result) ? result : 0
+      Rate = Rate
     };
   }
 }
