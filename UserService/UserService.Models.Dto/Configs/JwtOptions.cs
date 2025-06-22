@@ -11,7 +11,4 @@ public class JwtOptions
 
   public string PrivateKeyBase64 { get; set; }
   public RSA PrivateKey { get; set; }
-
-  public string PublicKeyBase64 { get; set; }
-  public RSA PublicKey { get; set; }
 }

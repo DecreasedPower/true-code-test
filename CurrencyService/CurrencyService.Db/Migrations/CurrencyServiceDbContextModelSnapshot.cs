@@ -94,19 +94,21 @@ namespace CurrencyService.Db.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DbCurrencyDbUser", b =>
+            modelBuilder.Entity("UsersCurrencies", b =>
                 {
-                    b.Property<string>("CurrenciesId")
-                        .HasColumnType("text");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("UserId");
 
-                    b.Property<int>("UsersId")
-                        .HasColumnType("integer");
+                    b.Property<string>("CurrencyId")
+                        .HasColumnType("text")
+                        .HasColumnName("CurrencyId");
 
-                    b.HasKey("CurrenciesId", "UsersId");
+                    b.HasKey("UserId", "CurrencyId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("CurrencyId");
 
-                    b.ToTable("UserCurrencies", (string)null);
+                    b.ToTable("UsersCurrencies", (string)null);
                 });
 
             modelBuilder.Entity("CurrencyService.Db.Models.DbRefreshToken", b =>
@@ -120,19 +122,21 @@ namespace CurrencyService.Db.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DbCurrencyDbUser", b =>
+            modelBuilder.Entity("UsersCurrencies", b =>
                 {
                     b.HasOne("CurrencyService.Db.Models.DbCurrency", null)
                         .WithMany()
-                        .HasForeignKey("CurrenciesId")
+                        .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_UsersCurrencies_CurrencyId");
 
                     b.HasOne("CurrencyService.Db.Models.DbUser", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_UsersCurrencies_UserId");
                 });
 #pragma warning restore 612, 618
         }

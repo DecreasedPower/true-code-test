@@ -23,7 +23,7 @@ services:
    ports:
      - "5001:80"
    environment:
-     - ASPNETCORE_ENVIRONMENT=Production
+     - ASPNETCORE_ENVIRONMENT=Development
      - DbConnectionString=Host=postgres;Port=5432;Database=appdb;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
    depends_on:
      - postgres
@@ -47,20 +47,21 @@ services:
     networks:
       - backend
 
-#  finance-service:
-#    build:
-#      context: ./FinanceService
-#      dockerfile: Dockerfile
-#    container_name: finance-service
-#    ports:
-#      - "5003:80"
-#    environment:
-#      - ASPNETCORE_ENVIRONMENT=Production
-#      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=appdb;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
-#    depends_on:
-#      - postgres
-#    networks:
-#      - backend
+  finance-service:
+    build:
+      context: ./FinanceService
+      dockerfile: Dockerfile
+    container_name: finance-service
+    ports:
+      - "5003:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=appdb;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      - JWT__PublicKeyBase64=${PUBLIC_KEY}
+    depends_on:
+      - postgres
+    networks:
+      - backend
 
   postgres:
     image: postgres:latest

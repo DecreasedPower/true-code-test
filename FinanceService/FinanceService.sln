@@ -2,6 +2,23 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService", "FinanceService\FinanceService.csproj", "{78002792-E980-447E-858B-5567F992DB62}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{7071B7FC-1314-41AA-A115-0C931E0A60D3}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+		.dockerignore = .dockerignore
+		..\docker-compose.yml = ..\docker-compose.yml
+		..\.env = ..\.env
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Business", "FinanceService.Business\FinanceService.Business.csproj", "{2C96FA56-0976-4885-8B68-79C425ABFBBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Db", "FinanceService.Db\FinanceService.Db.csproj", "{FF9CA2E3-8F0D-446E-BB6D-B1F1989C8AC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Models.Dto", "FinanceService.Models.Dto\FinanceService.Models.Dto.csproj", "{45D2C597-AF14-40C2-83EC-9A7DB03316BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Data", "FinanceService.Data\FinanceService.Data.csproj", "{080971B6-3957-42D6-BCF1-B3C42F9BA7DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +29,21 @@ Global
 		{78002792-E980-447E-858B-5567F992DB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78002792-E980-447E-858B-5567F992DB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78002792-E980-447E-858B-5567F992DB62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C96FA56-0976-4885-8B68-79C425ABFBBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C96FA56-0976-4885-8B68-79C425ABFBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C96FA56-0976-4885-8B68-79C425ABFBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C96FA56-0976-4885-8B68-79C425ABFBBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF9CA2E3-8F0D-446E-BB6D-B1F1989C8AC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF9CA2E3-8F0D-446E-BB6D-B1F1989C8AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF9CA2E3-8F0D-446E-BB6D-B1F1989C8AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF9CA2E3-8F0D-446E-BB6D-B1F1989C8AC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45D2C597-AF14-40C2-83EC-9A7DB03316BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45D2C597-AF14-40C2-83EC-9A7DB03316BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45D2C597-AF14-40C2-83EC-9A7DB03316BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45D2C597-AF14-40C2-83EC-9A7DB03316BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{080971B6-3957-42D6-BCF1-B3C42F9BA7DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{080971B6-3957-42D6-BCF1-B3C42F9BA7DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{080971B6-3957-42D6-BCF1-B3C42F9BA7DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{080971B6-3957-42D6-BCF1-B3C42F9BA7DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

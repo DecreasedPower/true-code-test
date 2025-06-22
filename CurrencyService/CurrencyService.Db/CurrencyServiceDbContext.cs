@@ -18,7 +18,27 @@ public class CurrencyServiceDbContext(DbContextOptions<CurrencyServiceDbContext>
     modelBuilder.Entity<DbUser>()
       .HasMany(u => u.Currencies)
       .WithMany(c => c.Users)
-      .UsingEntity(uc => uc.ToTable("UserCurrencies"));
+      .UsingEntity<Dictionary<string, object>>(
+        "UsersCurrencies",
+        j => j
+          .HasOne<DbCurrency>()
+          .WithMany()
+          .HasForeignKey("CurrencyId")
+          .HasConstraintName("FK_UsersCurrencies_CurrencyId")
+          .OnDelete(DeleteBehavior.Cascade),
+        j => j
+          .HasOne<DbUser>()
+          .WithMany()
+          .HasForeignKey("UserId")
+          .HasConstraintName("FK_UsersCurrencies_UserId")
+          .OnDelete(DeleteBehavior.Cascade),
+        j =>
+        {
+          j.HasKey("UserId", "CurrencyId");
+          j.ToTable("UsersCurrencies");
+          j.IndexerProperty<int>("UserId").HasColumnName("UserId");
+          j.IndexerProperty<string>("CurrencyId").HasColumnName("CurrencyId");
+        });
 
     modelBuilder.Entity<DbRefreshToken>()
       .HasOne(r => r.User);

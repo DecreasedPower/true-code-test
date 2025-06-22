@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -39,40 +40,76 @@ namespace CurrencyService.Db.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserCurrencies",
+                name: "RefreshTokens",
                 columns: table => new
                 {
-                    CurrenciesId = table.Column<string>(type: "text", nullable: false),
-                    UsersId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    TokenHash = table.Column<string>(type: "text", nullable: false),
+                    ExpiresAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Revoked = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserCurrencies", x => new { x.CurrenciesId, x.UsersId });
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserCurrencies_Currencies_CurrenciesId",
-                        column: x => x.CurrenciesId,
+                        name: "FK_RefreshTokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UsersCurrencies",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    CurrencyId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersCurrencies", x => new { x.UserId, x.CurrencyId });
+                    table.ForeignKey(
+                        name: "FK_UsersCurrencies_CurrencyId",
+                        column: x => x.CurrencyId,
                         principalTable: "Currencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserCurrencies_Users_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_UsersCurrencies_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserCurrencies_UsersId",
-                table: "UserCurrencies",
-                column: "UsersId");
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Name",
+                table: "Users",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersCurrencies_CurrencyId",
+                table: "UsersCurrencies",
+                column: "CurrencyId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserCurrencies");
+                name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
+                name: "UsersCurrencies");
 
             migrationBuilder.DropTable(
                 name: "Currencies");
