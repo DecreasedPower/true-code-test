@@ -1,21 +1,22 @@
-﻿# Stage 1: build
+﻿# Используем официальный SDK-образ для сборки
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+WORKDIR /app
 
-# Копируем решение и csproj
-COPY UserService.sln ./
-COPY UserService/UserService.csproj ./UserService/
+# Копируем решение и проекты
+COPY . ./
 
 # Восстанавливаем зависимости
-RUN dotnet restore UserService.sln
+RUN dotnet restore ./UserService/UserService.csproj
 
-# Копируем оставшиеся исходники и публикуем
-COPY UserService/ ./UserService/
-WORKDIR /src/UserService
-RUN dotnet publish -c Release -o /app/publish
+# Собираем проект
+RUN dotnet publish ./UserService/UserService.csproj -c Release -o /app/publish
 
-# Stage 2: runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+# Используем runtime-образ для запуска
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
-COPY --from=build /app/publish ./
+
+# Копируем опубликованные файлы из стадии сборки
+COPY --from=build /app/publish .
+
+# Задаем точку входа
 ENTRYPOINT ["dotnet", "UserService.dll"]

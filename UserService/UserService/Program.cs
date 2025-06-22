@@ -1,3 +1,13 @@
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using UserService.Business.Commands;
+using UserService.Business.Commands.Interfaces;
+using UserService.Data.Repositories;
+using UserService.Data.Repositories.Interfaces;
+using UserService.Db;
+using UserService.Models.Dto.Configs;
+
 namespace UserService;
 
 public class Program
@@ -6,11 +16,24 @@ public class Program
   {
     var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
+    builder.Services.AddDbContext<UserServiceDbContext>(options =>
+      options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString")));
 
+    var jwtOptions = builder.Configuration.GetSection("Jwt");
+    builder.Services.Configure<JwtOptions>(jwtOptions);
+    builder.Services.Configure<JwtOptions>(options =>
+    {
+      options.PrivateKey = CreateRsaFromBase64(options.PrivateKeyBase64);
+    });
+
+    builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddTransient<ILoginCommand, LoginCommand>();
+    builder.Services.AddTransient<IRefreshCommand, RefreshCommand>();
+    builder.Services.AddTransient<IRegisterCommand, RegisterCommand>();
+    builder.Services.AddTransient<ILogoutCommand, LogoutCommand>();
     builder.Services.AddControllers();
 
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
@@ -23,12 +46,19 @@ public class Program
       app.UseSwaggerUI();
     }
 
-    app.UseHttpsRedirection();
-
+    app.UseRouting();
+    app.UseAuthentication();
     app.UseAuthorization();
-
     app.MapControllers();
 
     app.Run();
+  }
+
+  private static RSA CreateRsaFromBase64(string base64)
+  {
+    var key = Encoding.UTF8.GetString(Convert.FromBase64String(base64));
+    var rsa = RSA.Create();
+    rsa.ImportFromPem(key);
+    return rsa;
   }
 }

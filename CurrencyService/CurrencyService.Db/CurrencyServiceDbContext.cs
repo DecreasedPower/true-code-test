@@ -7,12 +7,20 @@ public class CurrencyServiceDbContext(DbContextOptions<CurrencyServiceDbContext>
 {
   public DbSet<DbCurrency> Currencies { get; set; }
   public DbSet<DbUser> Users { get; set; }
+  public DbSet<DbRefreshToken> RefreshTokens { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     modelBuilder.Entity<DbUser>()
+      .HasIndex(u => u.Name)
+      .IsUnique();
+
+    modelBuilder.Entity<DbUser>()
       .HasMany(u => u.Currencies)
       .WithMany(c => c.Users)
       .UsingEntity(uc => uc.ToTable("UserCurrencies"));
+
+    modelBuilder.Entity<DbRefreshToken>()
+      .HasOne(r => r.User);
   }
 }
