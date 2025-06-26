@@ -22,4 +22,9 @@
         <Using Include="NUnit.Framework"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\UserService.Data\UserService.Data.csproj" />
+      <ProjectReference Include="..\UserService.Db\UserService.Db.csproj" />
+    </ItemGroup>
+
 </Project>

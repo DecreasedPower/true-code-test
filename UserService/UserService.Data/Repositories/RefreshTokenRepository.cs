@@ -28,12 +28,13 @@ public class RefreshTokenRepository(
     return true;
   }
 
-  public Task<DbRefreshToken> CheckAsync(string tokenHash, CancellationToken ct = default)
+  public async Task<DbRefreshToken> CheckAsync(string tokenHash, CancellationToken ct = default)
   {
-    return dbContext.RefreshTokens
+    return await dbContext.RefreshTokens
       .Include(rt => rt.User)
       .FirstOrDefaultAsync(rt =>
         !rt.Revoked &&
-        rt.TokenHash == tokenHash, ct);
+        rt.TokenHash == tokenHash &&
+        rt.ExpiresAt > DateTime.Now, ct);
   }
 }
