@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using UserService.Business.Commands.Interfaces;
 using UserService.Business.Helpers;
@@ -11,16 +12,17 @@ namespace UserService.Business.Commands;
 
 public class RefreshCommand(
   IRefreshTokenRepository refreshTokenRepository,
-  IOptions<JwtOptions> jwtOptions)
+  IOptions<JwtOptions> jwtOptions,
+  ILogger<RefreshCommand> logger)
   : IRefreshCommand
 {
   public async Task<AuthResponse> ExecuteAsync(RefreshRequest request, CancellationToken ct)
   {
     var tokenHash = TokenHelper.ComputeHash(request.RefreshToken);
-
     var token = await refreshTokenRepository.CheckAsync(tokenHash, ct);
     if (token is null)
     {
+      logger.LogWarning("Failed to refresh token.");
       return null;
     }
 

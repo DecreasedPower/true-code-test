@@ -11,21 +11,14 @@ public class UserRepository(
 {
   public async Task<DbUser> RegisterAsync(DbUser user)
   {
-    try
-    {
-      dbContext.Users.Add(user);
-      await dbContext.SaveChangesAsync();
-    }
-    catch (Exception e)
-    {
-      return null;
-    }
+    dbContext.Users.Add(user);
+    await dbContext.SaveChangesAsync();
 
     return await dbContext.Users.SingleAsync(u => u.Name == user.Name);
   }
 
   public Task<DbUser> GetAsync(string name)
   {
-    return dbContext.Users.FirstOrDefaultAsync(u => u.Name == name);
+    return dbContext.Users.SingleAsync(u => u.Name == name);
   }
 }

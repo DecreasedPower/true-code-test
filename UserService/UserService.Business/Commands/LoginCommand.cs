@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using UserService.Business.Commands.Interfaces;
 using UserService.Business.Helpers;
@@ -13,12 +14,22 @@ namespace UserService.Business.Commands;
 public class LoginCommand(
   IUserRepository userRepository,
   IRefreshTokenRepository refreshTokenRepository,
-  IOptions<JwtOptions> jwtOptions)
+  IOptions<JwtOptions> jwtOptions,
+  ILogger<LoginCommand> logger)
   : ILoginCommand
 {
   public async Task<AuthResponse> ExecuteAsync(LoginRequest request, CancellationToken ct)
   {
-    var user = await userRepository.GetAsync(request.Name);
+    DbUser user;
+    try
+    {
+      user = await userRepository.GetAsync(request.Name);
+    }
+    catch (Exception e)
+    {
+      logger.LogWarning(e, "Failed to login.");
+      return null;
+    }
 
     if (!Crypt.EnhancedVerify(request.Password, user.Password))
     {

@@ -10,9 +10,7 @@ namespace UserService.Controllers;
 
 [ApiController]
 [Route("auth")]
-public class AuthController(
-  ILogger<AuthController> logger)
-  : Controller
+public class AuthController : Controller
 {
   [HttpPost("register")]
   public async Task<IActionResult> Register(
@@ -23,11 +21,9 @@ public class AuthController(
     AuthResponse result = await command.ExecuteAsync(request, ct);
     if (result is null)
     {
-      logger.LogWarning("Failed to register.");
       return Unauthorized("Failed to register.");
     }
 
-    logger.LogInformation("User {userName} successfully registered.", request.Name);
     return Ok(result);
   }
 
@@ -40,11 +36,9 @@ public class AuthController(
     AuthResponse result = await command.ExecuteAsync(request, ct);
     if (result is null)
     {
-      logger.LogWarning("User {userName} failed to login.", request.Name);
       return Unauthorized("Failed to login.");
     }
 
-    logger.LogInformation("User {userName} successfully logged in.", request.Name);
     return Ok(result);
   }
 
@@ -57,11 +51,9 @@ public class AuthController(
     AuthResponse result = await command.ExecuteAsync(request, ct);
     if (result is null)
     {
-      logger.LogWarning("Failed to refresh token.");
       return Unauthorized("Failed to refresh token.");
     }
 
-    logger.LogInformation("Refresh token success.");
     return Ok(result);
   }
 
@@ -74,11 +66,9 @@ public class AuthController(
     bool result = await command.ExecuteAsync(request, ct);
     if (!result)
     {
-      logger.LogWarning("Failed to logout.");
       return Unauthorized("Failed to logout.");
     }
 
-    logger.LogInformation("Logout success.");
     return Ok(true);
   }
 }

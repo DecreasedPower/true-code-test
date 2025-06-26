@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using UserService.Business.Commands.Interfaces;
 using UserService.Business.Helpers;
@@ -13,19 +14,25 @@ namespace UserService.Business.Commands;
 public class RegisterCommand(
   IUserRepository userRepository,
   IRefreshTokenRepository refreshTokenRepository,
-  IOptions<JwtOptions> jwtOptions) : IRegisterCommand
+  IOptions<JwtOptions> jwtOptions,
+  ILogger<RegisterCommand> logger)
+  : IRegisterCommand
 {
   public async Task<AuthResponse> ExecuteAsync(LoginRequest request, CancellationToken ct)
   {
-    DbUser registeredUser = await userRepository.RegisterAsync(new DbUser
+    DbUser registeredUser;
+    try
     {
-      Id = 0,
-      Name = request.Name,
-      Password = Crypt.EnhancedHashPassword(request.Password)
-    });
-
-    if (registeredUser is null)
+      registeredUser = await userRepository.RegisterAsync(new DbUser
+      {
+        Id = 0,
+        Name = request.Name,
+        Password = Crypt.EnhancedHashPassword(request.Password)
+      });
+    }
+    catch (Exception e)
     {
+      logger.LogWarning(e, "Failed to register.");
       return null;
     }
 
