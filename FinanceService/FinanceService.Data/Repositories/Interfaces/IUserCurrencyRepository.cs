@@ -5,8 +5,8 @@ namespace FinanceService.Data.Repositories.Interfaces;
 
 public interface IUserCurrencyRepository
 {
-  Task<List<UserValute>> GetAsync(List<string> valuteCodes, CancellationToken ct = default);
+  Task<List<Currency>> GetAsync(int userId, List<string> currencyCodes = null, CancellationToken ct = default);
   Task AddAsync(DbUserCurrency userCurrency, CancellationToken ct = default);
-  Task UpdateAsync(List<DbUserCurrency> userCurrencies, CancellationToken ct = default);
+  Task UpdateAsync(int userId, List<DbUserCurrency> userCurrencies, CancellationToken ct = default);
   Task<int> RemoveAsync(DbUserCurrency userCurrency, CancellationToken ct = default);
 }

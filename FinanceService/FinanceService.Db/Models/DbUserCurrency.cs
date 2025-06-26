@@ -12,4 +12,6 @@ public class DbUserCurrency
 
   [MaxLength(100)]
   public string CurrencyId { get; set; }
+
+  public DbCurrency Currency { get; set; }
 }

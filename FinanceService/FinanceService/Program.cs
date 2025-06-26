@@ -21,10 +21,12 @@ public class Program
       options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString")));
 
     builder.Services.AddScoped<IUserCurrencyRepository, UserCurrencyRepository>();
-    builder.Services.AddTransient<IAddValuteCommand, AddValuteCommand>();
-    builder.Services.AddTransient<IGetValutesCommand, GetValutesCommand>();
-    builder.Services.AddTransient<IUpdateValutesCommand, UpdateValutesCommand>();
-    builder.Services.AddTransient<IRemoveValuteCommand, RemoveValuteCommand>();
+    builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+    builder.Services.AddTransient<IAddCurrencyCommand, AddCurrencyCommand>();
+    builder.Services.AddTransient<IGetCurrenciesCommand, GetCurrenciesCommand>();
+    builder.Services.AddTransient<IGetAvailableCurrenciesCommand, GetAvailableCurrenciesCommand>();
+    builder.Services.AddTransient<IUpdateCurrenciesCommand, UpdateCurrenciesCommand>();
+    builder.Services.AddTransient<IRemoveCurrencyCommand, RemoveCurrencyCommand>();
 
     var jwtOptions = builder.Configuration.GetSection("Jwt");
     builder.Services

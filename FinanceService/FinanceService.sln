@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Models.Dto",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Data", "FinanceService.Data\FinanceService.Data.csproj", "{080971B6-3957-42D6-BCF1-B3C42F9BA7DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Data.Tests", "FinanceService.Data.Tests\FinanceService.Data.Tests.csproj", "{B1ECC718-BD7D-45C4-BD8A-B57A247F1EF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,5 +47,9 @@ Global
 		{080971B6-3957-42D6-BCF1-B3C42F9BA7DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{080971B6-3957-42D6-BCF1-B3C42F9BA7DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{080971B6-3957-42D6-BCF1-B3C42F9BA7DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1ECC718-BD7D-45C4-BD8A-B57A247F1EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1ECC718-BD7D-45C4-BD8A-B57A247F1EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1ECC718-BD7D-45C4-BD8A-B57A247F1EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1ECC718-BD7D-45C4-BD8A-B57A247F1EF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -11,19 +11,21 @@ public class UserCurrencyRepository(
   FinanceServiceDbContext dbContext)
   : IUserCurrencyRepository
 {
-  public Task<List<UserValute>> GetAsync(List<string> valuteCodes, CancellationToken ct = default)
+  public Task<List<Currency>> GetAsync(int userId, List<string> currencyCodes = null, CancellationToken ct = default)
   {
     var userCurrencies = dbContext.UserCurrencies
-      .AsNoTracking();
+      .AsNoTracking()
+      .Where(uc => uc.UserId == userId);
 
-    if (valuteCodes is not null && valuteCodes.Count > 0)
+    if (currencyCodes is not null && currencyCodes.Count > 0)
     {
       userCurrencies = userCurrencies
-        .Where(uc => valuteCodes.Contains(uc.CurrencyId));
+        .Where(uc => currencyCodes.Contains(uc.CurrencyId));
     }
 
     return userCurrencies
-      .Select(uc => new UserValute(uc.UserId, uc.CurrencyId))
+      .Include(uc => uc.Currency)
+      .Select(uc => new Currency(uc.Currency.Id, uc.Currency.Name, uc.Currency.Rate))
       .ToListAsync(ct);
   }
 
@@ -33,16 +35,16 @@ public class UserCurrencyRepository(
     return dbContext.SaveChangesAsync(ct);
   }
 
-  public async Task UpdateAsync(List<DbUserCurrency> userCurrencies, CancellationToken ct = default)
+  public async Task UpdateAsync(int userId, List<DbUserCurrency> userCurrencies, CancellationToken ct = default)
   {
-    var sqlSb = new StringBuilder(@"
-      BEGIN;
-        DELETE FROM ""Currencies"" WHERE 1 = 1;");
+    var sqlSb = new StringBuilder(@$"
+      BEGIN TRANSACTION;
+        DELETE FROM ""UsersCurrencies"" WHERE UserId = {userId};");
 
     if (userCurrencies is not null && userCurrencies.Count > 0)
     {
       sqlSb.Append(@"
-        INSERT INTO ""UserCurrencies"" (""UserId"", ""Code"")
+        INSERT INTO ""UsersCurrencies"" (""UserId"", ""CurrencyId"")
         VALUES ");
 
       for (int i = 0; i < userCurrencies.Count; i++)

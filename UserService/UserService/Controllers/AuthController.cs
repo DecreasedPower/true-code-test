@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Business.Commands.Interfaces;
@@ -10,7 +9,6 @@ using LoginRequest = UserService.Models.Dto.Requests.LoginRequest;
 namespace UserService.Controllers;
 
 [ApiController]
-[AllowAnonymous]
 [Route("auth")]
 public class AuthController(
   ILogger<AuthController> logger)

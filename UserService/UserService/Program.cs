@@ -46,11 +46,8 @@ public class Program
       app.UseSwaggerUI();
     }
 
-    app.UseRouting();
-    app.UseAuthentication();
-    app.UseAuthorization();
     app.MapControllers();
-
+    app.UseRouting();
     app.Run();
   }
 
