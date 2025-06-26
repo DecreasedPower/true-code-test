@@ -8,7 +8,7 @@ namespace FinanceService.Business.Commands;
 
 public class GetCurrenciesCommand(
   IUserCurrencyRepository repository,
-  IHttpContextAccessor contextAccessor)
+  HttpContextAccessor contextAccessor)
   : IGetCurrenciesCommand
 {
   public Task<List<Currency>> ExecuteAsync(string currencyCode = null, CancellationToken ct = default)
