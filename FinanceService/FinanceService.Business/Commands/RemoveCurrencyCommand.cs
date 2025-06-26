@@ -9,7 +9,7 @@ namespace FinanceService.Business.Commands;
 
 public class RemoveCurrencyCommand(
   IUserCurrencyRepository repository,
-  HttpContextAccessor contextAccessor,
+  IHttpContextAccessor contextAccessor,
   ILogger<RemoveCurrencyCommand> logger)
   : IRemoveCurrencyCommand
 {

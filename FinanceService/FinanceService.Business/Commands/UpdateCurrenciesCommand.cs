@@ -9,7 +9,7 @@ namespace FinanceService.Business.Commands;
 
 public class UpdateCurrenciesCommand(
   IUserCurrencyRepository repository,
-  HttpContextAccessor contextAccessor,
+  IHttpContextAccessor contextAccessor,
   ILogger<UpdateCurrenciesCommand> logger)
   : IUpdateCurrenciesCommand
 {

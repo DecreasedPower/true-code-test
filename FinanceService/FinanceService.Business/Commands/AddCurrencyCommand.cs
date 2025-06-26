@@ -9,7 +9,7 @@ namespace FinanceService.Business.Commands;
 
 public class AddCurrencyCommand(
   IUserCurrencyRepository repository,
-  HttpContextAccessor contextAccessor,
+  IHttpContextAccessor contextAccessor,
   ILogger<AddCurrencyCommand> logger)
   : IAddCurrencyCommand
 {

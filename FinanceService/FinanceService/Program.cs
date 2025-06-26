@@ -20,6 +20,7 @@ public class Program
     builder.Services.AddDbContext<FinanceServiceDbContext>(options =>
       options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnectionString")));
 
+    builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IUserCurrencyRepository, UserCurrencyRepository>();
     builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
     builder.Services.AddTransient<IAddCurrencyCommand, AddCurrencyCommand>();
@@ -45,18 +46,14 @@ public class Program
           IssuerSigningKey = new RsaSecurityKey(rsa)
         };
       });
+
     builder.Services.AddAuthorization();
-
     builder.Services.AddControllers();
-    builder.Services.AddHttpContextAccessor();
-
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
     var app = builder.Build();
 
-    // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
       app.UseSwagger();
