@@ -29,6 +29,9 @@ jobs:
       - name: Build
         run: dotnet build Gateway.sln --no-restore --configuration Release
 
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release --verbosity normal
+
   build-currency-service:
     name: Build CurrencyService
     runs-on: ubuntu-latest
@@ -49,6 +52,9 @@ jobs:
 
       - name: Build
         run: dotnet build CurrencyService.sln --no-restore --configuration Release
+
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release --verbosity normal
 
   build-user-service:
     name: Build UserService
@@ -71,6 +77,9 @@ jobs:
       - name: Build
         run: dotnet build UserService.sln --no-restore --configuration Release
 
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release --verbosity normal
+
   build-finance-service:
     name: Build FinanceService
     runs-on: ubuntu-latest
@@ -91,3 +100,6 @@ jobs:
 
       - name: Build
         run: dotnet build FinanceService.sln --no-restore --configuration Release
+
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release --verbosity normal
