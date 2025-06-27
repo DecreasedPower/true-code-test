@@ -1,6 +1,7 @@
 ﻿# Используем официальный SDK-образ для сборки
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
+EXPOSE 8080
 
 # Копируем решение и проекты
 COPY . ./
