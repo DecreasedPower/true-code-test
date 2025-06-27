@@ -24,6 +24,8 @@ public class AuthController(
   : Controller
 {
   [HttpPost("register")]
+  [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Register(
     [FromBody][Required] LoginRequest body,
     [FromServices] IHttpClientFactory clientFactory,
@@ -41,8 +43,8 @@ public class AuthController(
   }
 
   [HttpPost("login")]
-    [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Login(
     [FromBody][Required] LoginRequest body,
     [FromServices] IHttpClientFactory clientFactory,
@@ -58,6 +60,8 @@ public class AuthController(
   }
 
   [HttpPost("refresh")]
+  [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Refresh(
     [FromBody][Required] RefreshRequest body,
     [FromServices] IHttpClientFactory clientFactory,
@@ -75,6 +79,8 @@ public class AuthController(
   }
 
   [HttpPost("logout")]
+  [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Logout(
     [FromBody][Required] LogoutRequest body,
     [FromServices] IHttpClientFactory clientFactory,

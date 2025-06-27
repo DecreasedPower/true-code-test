@@ -6,12 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceService.Controllers;
 
+[Consumes("application/json")]
+[Produces("application/json")]
 [Authorize]
 [ApiController]
 [Route("currencies")]
 public class CurrenciesController : Controller
 {
   [HttpPost]
+  [ProducesResponseType(typeof(bool), StatusCodes.Status201Created)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> AddAsync(
     [Required][FromBody] string currencyCode,
     [FromServices] IAddCurrencyCommand command,
@@ -23,10 +27,12 @@ public class CurrenciesController : Controller
       return BadRequest("Failed to add currency.");
     }
 
-    return Created("Currencies", true);
+    return Created("currencies", true);
   }
 
   [HttpGet]
+  [ProducesResponseType(typeof(List<Currency>), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> GetAllAsync(
     [FromServices] IGetCurrenciesCommand command,
     CancellationToken ct)
@@ -36,6 +42,9 @@ public class CurrenciesController : Controller
   }
 
   [HttpGet("{currencyCode}")]
+  [ProducesResponseType(typeof(Currency), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
   public async Task<IActionResult> GetAsync(
     [FromRoute][Required][MaxLength(100)] string currencyCode,
     [FromServices] IGetCurrenciesCommand command,
@@ -51,6 +60,8 @@ public class CurrenciesController : Controller
   }
 
   [HttpGet("available")]
+  [ProducesResponseType(typeof(List<Currency>), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> GetAvailableAsync(
     [FromServices] IGetAvailableCurrenciesCommand command,
     CancellationToken ct)
@@ -60,6 +71,9 @@ public class CurrenciesController : Controller
   }
 
   [HttpPut]
+  [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
   public async Task<IActionResult> UpdateAsync(
     [Required] List<string> currencyCodes,
     [FromServices] IUpdateCurrenciesCommand command,
@@ -75,6 +89,9 @@ public class CurrenciesController : Controller
   }
 
   [HttpDelete("{currencyCode}")]
+  [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
   public async Task<IActionResult> UpdateAsync(
     [Required] string currencyCode,
     [FromServices] IRemoveCurrencyCommand command,

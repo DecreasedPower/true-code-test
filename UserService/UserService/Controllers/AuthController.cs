@@ -8,11 +8,15 @@ using LoginRequest = UserService.Models.Dto.Requests.LoginRequest;
 
 namespace UserService.Controllers;
 
+[Consumes("application/json")]
+[Produces("application/json")]
 [ApiController]
 [Route("auth")]
 public class AuthController : Controller
 {
   [HttpPost("register")]
+  [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Register(
     [FromBody][Required] LoginRequest request,
     [FromServices] IRegisterCommand command,
@@ -28,6 +32,8 @@ public class AuthController : Controller
   }
 
   [HttpPost("login")]
+  [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Login(
     [FromBody][Required] LoginRequest request,
     [FromServices] ILoginCommand command,
@@ -43,6 +49,8 @@ public class AuthController : Controller
   }
 
   [HttpPost("refresh")]
+  [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Refresh(
     [FromBody][Required] RefreshRequest request,
     [FromServices] IRefreshCommand command,
@@ -58,6 +66,8 @@ public class AuthController : Controller
   }
 
   [HttpPost("logout")]
+  [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Logout(
     [FromBody][Required] LogoutRequest request,
     [FromServices] ILogoutCommand command,
