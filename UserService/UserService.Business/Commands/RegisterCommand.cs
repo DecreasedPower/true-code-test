@@ -44,7 +44,7 @@ public class RegisterCommand(
       Id = 0,
       UserId = registeredUser.Id,
       Revoked = true,
-      ExpiresAt = DateTime.UtcNow.AddMinutes(jwtOptions.Value.RefreshTokenExpiryMinutes),
+      ExpiresAt = DateTime.UtcNow.AddDays(jwtOptions.Value.RefreshTokenExpiryDays),
       TokenHash = refreshToken
     }, ct);
 

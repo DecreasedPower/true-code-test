@@ -35,6 +35,6 @@ public class RefreshTokenRepository(
       .FirstOrDefaultAsync(rt =>
         !rt.Revoked &&
         rt.TokenHash == tokenHash &&
-        rt.ExpiresAt > DateTime.Now, ct);
+        rt.ExpiresAt > DateTime.UtcNow, ct);
   }
 }

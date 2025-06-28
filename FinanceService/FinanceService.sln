@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Data", "Fina
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.Data.Tests", "FinanceService.Data.Tests\FinanceService.Data.Tests.csproj", "{B1ECC718-BD7D-45C4-BD8A-B57A247F1EF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceService.gRPC", "FinanceService.gRPC\FinanceService.gRPC.csproj", "{13E8D1DD-B206-430F-BAE7-0B06907F05E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,5 +53,9 @@ Global
 		{B1ECC718-BD7D-45C4-BD8A-B57A247F1EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1ECC718-BD7D-45C4-BD8A-B57A247F1EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1ECC718-BD7D-45C4-BD8A-B57A247F1EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13E8D1DD-B206-430F-BAE7-0B06907F05E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13E8D1DD-B206-430F-BAE7-0B06907F05E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13E8D1DD-B206-430F-BAE7-0B06907F05E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13E8D1DD-B206-430F-BAE7-0B06907F05E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

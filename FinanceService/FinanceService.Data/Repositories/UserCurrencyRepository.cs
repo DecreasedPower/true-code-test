@@ -39,7 +39,7 @@ public class UserCurrencyRepository(
   {
     var sqlSb = new StringBuilder(@$"
       BEGIN TRANSACTION;
-        DELETE FROM ""UsersCurrencies"" WHERE UserId = {userId};");
+        DELETE FROM ""UsersCurrencies"" WHERE ""UserId"" = {userId};");
 
     if (userCurrencies is not null && userCurrencies.Count > 0)
     {

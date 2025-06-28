@@ -15,6 +15,7 @@ public class CurrenciesController : Controller
 {
   [HttpPost]
   [ProducesResponseType(typeof(bool), StatusCodes.Status201Created)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
   [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> AddAsync(
     [Required][FromBody] string currencyCode,

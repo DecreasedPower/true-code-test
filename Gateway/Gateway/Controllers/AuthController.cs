@@ -10,11 +10,6 @@ using LoginRequest = Gateway.Models.LoginRequest;
 
 namespace Gateway.Controllers;
 
-// TODO: переделать с IACTIONRESULT
-// поправить свагер везде
-// добавить grpc finance
-// добавить контроллер тут
-// пофиксить докер
 [Consumes("application/json")]
 [Produces("application/json")]
 [ApiController]
@@ -56,7 +51,8 @@ public class AuthController(
       body,
       ct);
 
-    return StatusCode((int)response.StatusCode, await response.Content.ReadFromJsonAsync(typeof(AuthResponse), ct));
+    var result = await response.Content.ReadFromJsonAsync<object>(ct);
+    return StatusCode((int)response.StatusCode, result);
   }
 
   [HttpPost("refresh")]
@@ -73,7 +69,7 @@ public class AuthController(
       body,
       ct);
 
-    var result = await response.Content.ReadAsStringAsync(ct);
+    var result = await response.Content.ReadFromJsonAsync<object>(ct);
 
     return StatusCode((int)response.StatusCode, result);
   }
@@ -92,7 +88,7 @@ public class AuthController(
       body,
       ct);
 
-    var result = await response.Content.ReadAsStringAsync(ct);
+    var result = await response.Content.ReadFromJsonAsync<object>(ct);
 
     return StatusCode((int)response.StatusCode, result);
   }

@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option csharp_namespace = "FinanceService.gRPC";
+
+package finance;
+
+message Currency {
+  string code = 1;
+  string name = 2;
+  string rate = 3;
+}
+
+message CurrencyCodeRequest {
+  string currency_code = 1;
+}
+
+message CurrencyCodeList {
+  repeated string currency_codes = 1;
+}
+
+message OperationResult {
+  bool success = 1;
+  string error = 2; // optional error message
+}
+
+message CurrencyList {
+  repeated Currency currencies = 1;
+}
+
+message Empty {}
+
+service CurrencyService {
+  rpc AddCurrency (CurrencyCodeRequest) returns (OperationResult);
+
+  rpc GetAllCurrencies (Empty) returns (CurrencyList);
+
+  rpc GetCurrency (CurrencyCodeRequest) returns (Currency);
+
+  rpc GetAvailableCurrencies (Empty) returns (CurrencyList);
+
+  rpc UpdateCurrencies (CurrencyCodeList) returns (OperationResult);
+
+  rpc RemoveCurrency (CurrencyCodeRequest) returns (OperationResult);
+}

@@ -44,7 +44,7 @@ public class LoginCommand(
       Id = 0,
       UserId = user.Id,
       Revoked = false,
-      ExpiresAt = DateTime.UtcNow.AddMinutes(jwtOptions.Value.RefreshTokenExpiryMinutes),
+      ExpiresAt = DateTime.UtcNow.AddDays(jwtOptions.Value.RefreshTokenExpiryDays),
       TokenHash = TokenHelper.ComputeHash(refreshToken)
     }, ct);
 

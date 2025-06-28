@@ -31,7 +31,7 @@ public class RefreshCommand(
     await refreshTokenRepository.AddAsync(new DbRefreshToken
     {
       UserId = token.UserId,
-      ExpiresAt = DateTime.UtcNow.AddMinutes(jwtOptions.Value.RefreshTokenExpiryMinutes),
+      ExpiresAt = DateTime.UtcNow.AddDays(jwtOptions.Value.RefreshTokenExpiryDays),
       TokenHash = TokenHelper.ComputeHash(newRefreshToken)
     }, ct);
 
