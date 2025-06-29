@@ -32,18 +32,18 @@ public class CurrenciesController : Controller
   }
 
   [HttpGet]
-  [ProducesResponseType(typeof(List<Currency>), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(List<CurrencyDto>), StatusCodes.Status200OK)]
   [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> GetAllAsync(
     [FromServices] IGetCurrenciesCommand command,
     CancellationToken ct)
   {
-    List<Currency> currencies = await command.ExecuteAsync(null, ct);
+    List<CurrencyDto> currencies = await command.ExecuteAsync(null, ct);
     return Ok(currencies);
   }
 
   [HttpGet("{currencyCode}")]
-  [ProducesResponseType(typeof(Currency), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(CurrencyDto), StatusCodes.Status200OK)]
   [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
   public async Task<IActionResult> GetAsync(
@@ -51,7 +51,7 @@ public class CurrenciesController : Controller
     [FromServices] IGetCurrenciesCommand command,
     CancellationToken ct)
   {
-    List<Currency> currencies = await command.ExecuteAsync(currencyCode, ct);
+    List<CurrencyDto> currencies = await command.ExecuteAsync(currencyCode, ct);
     if (currencies.Count == 0)
     {
       return NotFound("Specified currency not found.");
@@ -61,7 +61,7 @@ public class CurrenciesController : Controller
   }
 
   [HttpGet("available")]
-  [ProducesResponseType(typeof(List<Currency>), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(List<CurrencyDto>), StatusCodes.Status200OK)]
   [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> GetAvailableAsync(
     [FromServices] IGetAvailableCurrenciesCommand command,

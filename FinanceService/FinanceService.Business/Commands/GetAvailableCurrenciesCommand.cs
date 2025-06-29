@@ -8,7 +8,7 @@ public class GetAvailableCurrenciesCommand(
   ICurrencyRepository repository)
   : IGetAvailableCurrenciesCommand
 {
-  public Task<List<Currency>> ExecuteAsync(CancellationToken ct)
+  public Task<List<CurrencyDto>> ExecuteAsync(CancellationToken ct)
   {
     return repository.GetAvailableCurrenciesAsync(ct);
   }

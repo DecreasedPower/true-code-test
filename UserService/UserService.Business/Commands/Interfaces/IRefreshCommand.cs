@@ -5,5 +5,5 @@ namespace UserService.Business.Commands.Interfaces;
 
 public interface IRefreshCommand
 {
-  Task<AuthResponse> ExecuteAsync(RefreshRequest request, CancellationToken ct);
+  Task<AuthResponse> ExecuteAsync(string refreshToken, CancellationToken ct);
 }

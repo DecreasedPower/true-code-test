@@ -25,7 +25,23 @@ public class Program
     using (var scope = app.Services.CreateScope())
     {
       var db = scope.ServiceProvider.GetRequiredService<CurrencyServiceDbContext>();
-      db.Database.Migrate();
+
+      const int maxRetries = 10;
+      int retries = 0;
+
+      while (true)
+      {
+        try
+        {
+          db.Database.Migrate();
+          break;
+        }
+        catch (Exception) when (retries < maxRetries)
+        {
+          retries++;
+          Thread.Sleep(2000);
+        }
+      }
     }
 
     app.Run();

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using UserService.Business.Commands.Interfaces;
@@ -16,9 +15,9 @@ public class RefreshCommand(
   ILogger<RefreshCommand> logger)
   : IRefreshCommand
 {
-  public async Task<AuthResponse> ExecuteAsync(RefreshRequest request, CancellationToken ct)
+  public async Task<AuthResponse> ExecuteAsync(string refreshToken, CancellationToken ct)
   {
-    var tokenHash = TokenHelper.ComputeHash(request.RefreshToken);
+    string tokenHash = TokenHelper.ComputeHash(refreshToken);
     var token = await refreshTokenRepository.CheckAsync(tokenHash, ct);
     if (token is null)
     {

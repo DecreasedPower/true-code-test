@@ -3,7 +3,6 @@ using System.Text;
 using System.Text.Json;
 using Gateway.Models;
 using Gateway.Models.Configs;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using LoginRequest = Gateway.Models.LoginRequest;
@@ -32,7 +31,7 @@ public class AuthController(
       body,
       ct);
 
-    var result = await response.Content.ReadAsStringAsync(ct);
+    var result = await response.Content.ReadFromJsonAsync<object>(ct);
 
     return StatusCode((int)response.StatusCode, result);
   }
@@ -59,14 +58,14 @@ public class AuthController(
   [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
   [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Refresh(
-    [FromBody][Required] RefreshRequest body,
+    [FromBody][Required] string refreshToken,
     [FromServices] IHttpClientFactory clientFactory,
     CancellationToken ct)
   {
     var response = await SendRequest(
       clientFactory.CreateClient(),
       "auth/refresh",
-      body,
+      refreshToken,
       ct);
 
     var result = await response.Content.ReadFromJsonAsync<object>(ct);

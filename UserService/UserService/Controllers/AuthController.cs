@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Business.Commands.Interfaces;
 using UserService.Models.Dto.Responses;
@@ -51,11 +50,11 @@ public class AuthController : Controller
   [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
   [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Refresh(
-    [FromBody][Required] RefreshRequest request,
+    [FromBody][Required] string refreshToken,
     [FromServices] IRefreshCommand command,
     CancellationToken ct)
   {
-    AuthResponse result = await command.ExecuteAsync(request, ct);
+    AuthResponse result = await command.ExecuteAsync(refreshToken, ct);
     if (result is null)
     {
       return Unauthorized("Failed to refresh token.");

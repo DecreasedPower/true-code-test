@@ -4,5 +4,5 @@ namespace FinanceService.Business.Commands.Interfaces;
 
 public interface IGetAvailableCurrenciesCommand
 {
-  Task<List<Currency>> ExecuteAsync(CancellationToken ct);
+  Task<List<CurrencyDto>> ExecuteAsync(CancellationToken ct);
 }

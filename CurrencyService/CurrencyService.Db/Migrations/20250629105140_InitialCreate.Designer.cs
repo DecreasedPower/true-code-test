@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CurrencyService.Db.Migrations
 {
     [DbContext(typeof(CurrencyServiceDbContext))]
-    [Migration("20250622185225_InitialCreate")]
+    [Migration("20250629105140_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -83,11 +83,13 @@ namespace CurrencyService.Db.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 

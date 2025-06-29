@@ -78,7 +78,7 @@ public class CurrencyGrpcService(
     };
   }
 
-  private static Currency MapToProto(Models.Dto.Models.Currency entity)
+  private static Currency MapToProto(Models.Dto.Models.CurrencyDto entity)
   {
     return new Currency
     {

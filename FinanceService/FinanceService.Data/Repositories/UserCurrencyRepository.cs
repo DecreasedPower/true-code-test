@@ -11,7 +11,7 @@ public class UserCurrencyRepository(
   FinanceServiceDbContext dbContext)
   : IUserCurrencyRepository
 {
-  public Task<List<Currency>> GetAsync(int userId, CancellationToken ct = default)
+  public Task<List<CurrencyDto>> GetAsync(int userId, CancellationToken ct = default)
   {
     var userCurrencies = dbContext.UserCurrencies
       .AsNoTracking()
@@ -19,7 +19,7 @@ public class UserCurrencyRepository(
 
     return userCurrencies
       .Include(uc => uc.Currency)
-      .Select(uc => new Currency(uc.Currency.Id, uc.Currency.Name, uc.Currency.Rate))
+      .Select(uc => new CurrencyDto(uc.Currency.Id, uc.Currency.Name, uc.Currency.Rate))
       .ToListAsync(ct);
   }
 

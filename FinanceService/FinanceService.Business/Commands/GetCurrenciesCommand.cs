@@ -12,7 +12,7 @@ public class GetCurrenciesCommand(
   IHttpContextAccessor contextAccessor)
   : IGetCurrenciesCommand
 {
-  public async Task<List<Currency>> ExecuteAsync(string currencyCode = null, CancellationToken ct = default)
+  public async Task<List<CurrencyDto>> ExecuteAsync(string currencyCode = null, CancellationToken ct = default)
   {
     var userId = int.Parse(contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 

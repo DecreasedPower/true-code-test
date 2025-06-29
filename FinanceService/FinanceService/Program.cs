@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using FinanceService.Business.Commands;
@@ -55,15 +54,20 @@ public class Program
     {
       options.ListenAnyIP(servicePort, listenOptions =>
       {
+        listenOptions.Protocols = HttpProtocols.Http1;
+      });
+
+      options.ListenAnyIP(5004, listenOptions =>
+      {
         listenOptions.Protocols = HttpProtocols.Http2;
       });
     });
 
-    builder.Services.AddGrpc();
-    builder.Services.AddAuthorization();
     builder.Services.AddControllers();
+    builder.Services.AddGrpc();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    builder.Services.AddAuthorization();
 
     var app = builder.Build();
 
@@ -73,11 +77,11 @@ public class Program
       app.UseSwaggerUI();
     }
 
+    app.MapControllers();
+    app.MapGrpcService<CurrencyGrpcService>();
     app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();
-    app.MapControllers();
-    app.MapGrpcService<CurrencyGrpcService>();
     app.Run();
   }
 

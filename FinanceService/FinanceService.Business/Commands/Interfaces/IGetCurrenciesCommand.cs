@@ -4,5 +4,5 @@ namespace FinanceService.Business.Commands.Interfaces;
 
 public interface IGetCurrenciesCommand
 {
-  Task<List<Currency>> ExecuteAsync(string currencyCode = null, CancellationToken ct = default);
+  Task<List<CurrencyDto>> ExecuteAsync(string currencyCode = null, CancellationToken ct = default);
 }
