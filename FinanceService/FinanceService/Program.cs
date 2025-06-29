@@ -7,7 +7,6 @@ using FinanceService.Data.Repositories.Interfaces;
 using FinanceService.Db;
 using FinanceService.gRPC.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -49,18 +48,9 @@ public class Program
         };
       });
 
-    var servicePort = builder.Configuration.GetValue<int>("ServicePort");
     builder.WebHost.ConfigureKestrel(options =>
     {
-      options.ListenAnyIP(servicePort, listenOptions =>
-      {
-        listenOptions.Protocols = HttpProtocols.Http1;
-      });
-
-      options.ListenAnyIP(5004, listenOptions =>
-      {
-        listenOptions.Protocols = HttpProtocols.Http2;
-      });
+      options.Configure(builder.Configuration.GetSection("Kestrel"));
     });
 
     builder.Services.AddControllers();
@@ -77,11 +67,13 @@ public class Program
       app.UseSwaggerUI();
     }
 
-    app.MapControllers();
-    app.MapGrpcService<CurrencyGrpcService>();
     app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();
+
+    app.MapControllers();
+    app.MapGrpcService<CurrencyGrpcService>();
+
     app.Run();
   }
 

@@ -66,7 +66,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DbConnectionString=Host=postgres;Port=5432;Database=${CURRENCY_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
       - JWT__PublicKeyBase64=${PUBLIC_KEY}
-      - ServicePort=8080
+      - Kestrel__Endpoints__Http__Url=http://0.0.0.0:8080
     depends_on:
       - postgres
     networks:
