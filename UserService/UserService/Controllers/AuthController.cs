@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Business.Commands.Interfaces;
-using UserService.Models.Dto.Requests;
 using UserService.Models.Dto.Responses;
 using LoginRequest = UserService.Models.Dto.Requests.LoginRequest;
 
@@ -69,11 +68,11 @@ public class AuthController : Controller
   [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
   [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Logout(
-    [FromBody][Required] LogoutRequest request,
+    [FromBody][Required] string refreshToken,
     [FromServices] ILogoutCommand command,
     CancellationToken ct)
   {
-    bool result = await command.ExecuteAsync(request, ct);
+    bool result = await command.ExecuteAsync(refreshToken, ct);
     if (!result)
     {
       return Unauthorized("Failed to logout.");

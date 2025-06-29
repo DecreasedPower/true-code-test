@@ -42,14 +42,42 @@ public class CurrencyRepositoryTests
     });
     _context.SaveChanges();
 
-    var currencies = await _repository.GetAvailableCurrencies();
+    var currencies = await _repository.GetAvailableCurrenciesAsync();
     Assert.That(currencies, Has.Count.EqualTo(2));
+  }
+
+  [Test]
+  public async Task GetSpecifiedReturnsSuccessfully()
+  {
+    _context.Set<DbCurrency>().AddRange(new List<DbCurrency>
+    {
+      new() { Id = "Currency1", Name = "CurrencyName1", Rate = "CurrencyRate1" },
+      new() { Id = "Currency2", Name = "CurrencyName2", Rate = "CurrencyRate2" }
+    });
+    _context.SaveChanges();
+
+    var currencies = await _repository.GetAsync("Currency1");
+    Assert.That(currencies, Is.Not.Null);
+  }
+
+  [Test]
+  public async Task GetSpecifiedReturnsNull()
+  {
+    _context.Set<DbCurrency>().AddRange(new List<DbCurrency>
+    {
+      new() { Id = "Currency1", Name = "CurrencyName1", Rate = "CurrencyRate1" },
+      new() { Id = "Currency2", Name = "CurrencyName2", Rate = "CurrencyRate2" }
+    });
+    _context.SaveChanges();
+
+    var currencies = await _repository.GetAsync("Currency3");
+    Assert.That(currencies, Is.Null);
   }
 
   [Test]
   public async Task ReturnsNoDataIfEmpty()
   {
-    var currencies = await _repository.GetAvailableCurrencies();
+    var currencies = await _repository.GetAvailableCurrenciesAsync();
     Assert.That(currencies, Has.Count.EqualTo(0));
   }
 }

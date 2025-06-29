@@ -10,6 +10,6 @@ public class GetAvailableCurrenciesCommand(
 {
   public Task<List<Currency>> ExecuteAsync(CancellationToken ct)
   {
-    return repository.GetAvailableCurrencies(ct);
+    return repository.GetAvailableCurrenciesAsync(ct);
   }
 }

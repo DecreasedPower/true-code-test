@@ -7,7 +7,7 @@ services:
     ports:
       - "5000:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ServiceConfiguration__UserService=http://user-service:8080
       - ServiceConfiguration__FinanceService=http://finance-service:8080
       - JWT__PublicKeyBase64=${PUBLIC_KEY}
@@ -26,7 +26,7 @@ services:
       dockerfile: Dockerfile
     container_name: currency-service
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DbConnectionString=Host=postgres;Port=5432;Database=${CURRENCY_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
     depends_on:
       - postgres
@@ -41,7 +41,7 @@ services:
     ports:
       - "5002:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DbConnectionString=Host=postgres;Port=5432;Database=${CURRENCY_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
       - JWT__PublicKeyBase64=${PUBLIC_KEY}
       - JWT__PrivateKeyBase64=${PRIVATE_KEY}
@@ -62,7 +62,7 @@ services:
     ports:
       - "5003:8080"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DbConnectionString=Host=postgres;Port=5432;Database=${CURRENCY_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
       - JWT__PublicKeyBase64=${PUBLIC_KEY}
       - ServicePort=8080

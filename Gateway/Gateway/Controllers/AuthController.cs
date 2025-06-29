@@ -78,14 +78,14 @@ public class AuthController(
   [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
   [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
   public async Task<IActionResult> Logout(
-    [FromBody][Required] LogoutRequest body,
+    [FromBody][Required] string refreshToken,
     [FromServices] IHttpClientFactory clientFactory,
     CancellationToken ct)
   {
     var response = await SendRequest(
       clientFactory.CreateClient(),
       "auth/logout",
-      body,
+      refreshToken,
       ct);
 
     var result = await response.Content.ReadFromJsonAsync<object>(ct);

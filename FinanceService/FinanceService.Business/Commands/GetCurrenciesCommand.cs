@@ -7,19 +7,21 @@ using Microsoft.AspNetCore.Http;
 namespace FinanceService.Business.Commands;
 
 public class GetCurrenciesCommand(
-  IUserCurrencyRepository repository,
+  IUserCurrencyRepository userCurrencyRepository,
+  ICurrencyRepository currencyRepository,
   IHttpContextAccessor contextAccessor)
   : IGetCurrenciesCommand
 {
-  public Task<List<Currency>> ExecuteAsync(string currencyCode = null, CancellationToken ct = default)
+  public async Task<List<Currency>> ExecuteAsync(string currencyCode = null, CancellationToken ct = default)
   {
     var userId = int.Parse(contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-    List<string> currencies = null;
+
     if (!string.IsNullOrEmpty(currencyCode))
     {
-      currencies = [currencyCode];
+      var currency = await currencyRepository.GetAsync(currencyCode, ct);
+      return [currency];
     }
 
-    return repository.GetAsync(userId, currencies, ct);
+    return await userCurrencyRepository.GetAsync(userId, ct);
   }
 }

@@ -11,17 +11,11 @@ public class UserCurrencyRepository(
   FinanceServiceDbContext dbContext)
   : IUserCurrencyRepository
 {
-  public Task<List<Currency>> GetAsync(int userId, List<string> currencyCodes = null, CancellationToken ct = default)
+  public Task<List<Currency>> GetAsync(int userId, CancellationToken ct = default)
   {
     var userCurrencies = dbContext.UserCurrencies
       .AsNoTracking()
       .Where(uc => uc.UserId == userId);
-
-    if (currencyCodes is not null && currencyCodes.Count > 0)
-    {
-      userCurrencies = userCurrencies
-        .Where(uc => currencyCodes.Contains(uc.CurrencyId));
-    }
 
     return userCurrencies
       .Include(uc => uc.Currency)

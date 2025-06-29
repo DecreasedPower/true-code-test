@@ -1,7 +1,6 @@
 using UserService.Business.Commands.Interfaces;
 using UserService.Business.Helpers;
 using UserService.Data.Repositories.Interfaces;
-using UserService.Models.Dto.Requests;
 
 namespace UserService.Business.Commands;
 
@@ -9,10 +8,9 @@ public class LogoutCommand(
   IRefreshTokenRepository refreshTokenRepository)
   : ILogoutCommand
 {
-  public Task<bool> ExecuteAsync(LogoutRequest request, CancellationToken ct)
+  public Task<bool> ExecuteAsync(string refreshToken, CancellationToken ct)
   {
-    var tokenHash = TokenHelper.ComputeHash(request.RefreshToken);
-
+    string tokenHash = TokenHelper.ComputeHash(refreshToken);
     return refreshTokenRepository.RevokeAsync(tokenHash, ct);
   }
 }

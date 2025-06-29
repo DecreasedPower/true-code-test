@@ -12,7 +12,7 @@ public static class TokenHelper
 {
   public static string GenerateAccessToken(DbUser user, JwtOptions options)
   {
-    var creds = new SigningCredentials(
+    var credentials = new SigningCredentials(
       new RsaSecurityKey(options.PrivateKey),
       SecurityAlgorithms.RsaSha256
     );
@@ -28,7 +28,7 @@ public static class TokenHelper
       audience: options.Audience,
       claims: claims,
       expires: DateTime.UtcNow.AddMinutes(options.AccessTokenExpiryMinutes),
-      signingCredentials: creds);
+      signingCredentials: credentials);
 
     return new JwtSecurityTokenHandler().WriteToken(token);
   }

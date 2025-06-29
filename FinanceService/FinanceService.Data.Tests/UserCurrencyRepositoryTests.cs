@@ -69,40 +69,6 @@ public class UserCurrencyRepositoryTests
   }
 
   [Test]
-  public async Task GetSpecifiedReturnsSuccessfully()
-  {
-    SeedCurrencies();
-
-    _context.UserCurrencies.AddRange(new List<DbUserCurrency>
-    {
-      new() { CurrencyId = "1", UserId = UserId },
-      new() { CurrencyId = "2", UserId = 2 }
-    });
-
-    _context.SaveChanges();
-
-    var currencies = await _repository.GetAsync(UserId, ["1"]);
-    Assert.That(currencies, Has.Count.EqualTo(1));
-  }
-
-  [Test]
-  public async Task GetSpecifiedReturnsEmpty()
-  {
-    SeedCurrencies();
-
-    _context.UserCurrencies.AddRange(new List<DbUserCurrency>
-    {
-      new() { CurrencyId = "1", UserId = UserId },
-      new() { CurrencyId = "2", UserId = 2 }
-    });
-
-    _context.SaveChanges();
-
-    var currencies = await _repository.GetAsync(UserId, ["3"]);
-    Assert.That(currencies, Has.Count.EqualTo(0));
-  }
-
-  [Test]
   public async Task SuccessfullyAdds()
   {
     SeedCurrencies();

@@ -12,9 +12,11 @@ public class DbCurrency
   public string Id { get; set; }
 
   [MaxLength(100)]
+  [Required]
   public string Name { get; set; }
 
   [MaxLength(100)]
+  [Required]
   public string Rate { get; set; }
 
   public ICollection<DbUser> Users { get; set; } = new List<DbUser>();

@@ -4,5 +4,5 @@ namespace UserService.Business.Commands.Interfaces;
 
 public interface ILogoutCommand
 {
-  Task<bool> ExecuteAsync(LogoutRequest request, CancellationToken ct);
+  Task<bool> ExecuteAsync(string refreshToken, CancellationToken ct);
 }
